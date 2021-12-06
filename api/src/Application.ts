@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import fastify, { FastifyInstance } from 'fastify'
+import fastifyCors from 'fastify-cors'
 
 import { ILoggerService } from './services'
 import { IConfiguration } from './config'
@@ -24,6 +25,14 @@ export class Application implements IApplication {
     loggerService.Info('Configuration loaded.')
 
     this._app = fastify()
+
+    this.registerPlugins()
+  }
+
+  registerPlugins() {
+    this._app.register(fastifyCors, {
+      origin: '*'
+    })
   }
 
   run() {
