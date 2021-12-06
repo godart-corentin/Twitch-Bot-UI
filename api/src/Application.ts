@@ -4,6 +4,7 @@ import fastifyCors from 'fastify-cors'
 
 import { ILoggerService } from './services'
 import { IConfiguration } from './config'
+import routers from './routes'
 
 export interface IApplication {
   run(): void
@@ -27,12 +28,24 @@ export class Application implements IApplication {
     this._app = fastify()
 
     this.registerPlugins()
+    this.registerRoutes()
   }
 
   registerPlugins() {
     this._app.register(fastifyCors, {
       origin: '*'
     })
+  }
+
+  registerRoutes() {
+    for (const router of routers) {
+      for (const route of router.routes) {
+        this._app.route({
+          ...route,
+          url: `${router.prefix}${route.path}`
+        })
+      }
+    }
   }
 
   run() {
