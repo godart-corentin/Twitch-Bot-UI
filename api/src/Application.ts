@@ -1,10 +1,12 @@
 import { inject, injectable } from 'tsyringe'
 import fastify, { FastifyInstance } from 'fastify'
 import fastifyCors from 'fastify-cors'
+import fastifyCookie from 'fastify-cookie'
 
 import { ILoggerService } from './services'
-import { IConfiguration } from './config'
-import routers from './routes'
+import controllers from './controllers'
+import { Route } from './lib/types'
+import { IConfiguration } from './Configuration'
 
 export interface IApplication {
   run(): void
@@ -33,16 +35,25 @@ export class Application implements IApplication {
 
   registerPlugins() {
     this._app.register(fastifyCors, {
-      origin: '*'
+      origin: this._configuration.app.clientURL,
+      credentials: true
     })
+    this._app.register(fastifyCookie)
   }
 
   registerRoutes() {
-    for (const router of routers) {
-      for (const route of router.routes) {
+    for (const controller of controllers) {
+      const instance: any = new controller()
+      const prefix: string = Reflect.getMetadata('prefix', controller)
+      const routes: Array<Route> = Reflect.getMetadata('routes', controller)
+
+      for (const route of routes) {
         this._app.route({
-          ...route,
-          url: `${router.prefix}${route.path}`
+          method: route.requestMethod,
+          url: '/api' + prefix + route.path,
+          handler: (req, reply) => {
+            instance[route.methodName](req, reply)
+          }
         })
       }
     }

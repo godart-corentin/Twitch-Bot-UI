@@ -2,7 +2,7 @@ import { inject, singleton } from 'tsyringe'
 import figlet from 'figlet'
 import chalk from 'chalk'
 
-import { IConfiguration } from '../config/Configuration'
+import { IConfiguration } from '../Configuration'
 
 export interface ILoggerService {
   Ascii(write: string): void

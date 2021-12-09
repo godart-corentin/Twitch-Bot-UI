@@ -2,8 +2,7 @@ import path from 'path'
 import * as dotenv from 'dotenv'
 import { singleton } from 'tsyringe'
 
-import { AppConfiguration } from './AppConfiguration'
-import { TwitchConfiguration } from './TwitchConfiguration'
+import { AppConfiguration, TwitchConfiguration } from './lib/types'
 
 export interface IConfiguration {
   app: AppConfiguration
@@ -16,11 +15,13 @@ export class Configuration implements IConfiguration {
   public twitch: TwitchConfiguration
 
   constructor() {
-    dotenv.config({ path: path.join(__dirname, '../../.env') })
+    dotenv.config({ path: path.join(__dirname, '../.env') })
 
     this.app = {
       debug: process.env.DEBUG?.toLocaleLowerCase() == 'true' ?? false,
-      port: process.env.PORT || '8000'
+      port: process.env.PORT || '8000',
+      jwtSecret: process.env.JWT_SECRET || '',
+      clientURL: process.env.CLIENT_URL || ''
     }
 
     this.twitch = {
