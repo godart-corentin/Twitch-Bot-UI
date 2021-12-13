@@ -36,9 +36,20 @@ export class TwitchUserController {
             tokens.accessToken
           )
           if (user) {
-            return reply.code(200).send({
-              name: user.display_name
-            })
+            const isUserAllowed = await twitchUserService.isUserAllowed(
+              tokens.accessToken,
+              user.id
+            )
+            if (isUserAllowed) {
+              return reply.code(200).send({
+                name: user.display_name
+              })
+            } else {
+              return reply.code(401).send({
+                status: 401,
+                message: "Vous n'êtes pas autorisés."
+              } as MessageResponse)
+            }
           }
         }
       }

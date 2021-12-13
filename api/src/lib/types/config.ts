@@ -9,4 +9,6 @@ export type TwitchConfiguration = {
   clientID: string
   clientSecret: string
   redirectURI: string
+  channelId: string
+  scopes: Array<string>
 }

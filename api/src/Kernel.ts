@@ -6,7 +6,8 @@ import {
   LoggerService,
   TokenService,
   TwitchUserService,
-  TwitchTokenService
+  TwitchTokenService,
+  TwitchChannelService
 } from './services'
 
 export class Kernel {
@@ -23,6 +24,7 @@ export class Kernel {
       .register('ITokenService', { useClass: TokenService })
       .register('ITwitchUserService', { useClass: TwitchUserService })
       .register('ITwitchTokenService', { useClass: TwitchTokenService })
+      .register('ITwitchChannelService', { useClass: TwitchChannelService })
   }
 
   start() {

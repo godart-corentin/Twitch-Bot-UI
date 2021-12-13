@@ -13,7 +13,11 @@ export class TwitchAuthController {
     const { twitch } = container.resolve(Configuration)
     return reply.redirect(
       301,
-      `https://id.twitch.tv/oauth2/authorize?client_id=${twitch.clientID}&redirect_uri=${twitch.redirectURI}&response_type=code&scope=user:read:email`
+      `https://id.twitch.tv/oauth2/authorize?client_id=${
+        twitch.clientID
+      }&redirect_uri=${
+        twitch.redirectURI
+      }&response_type=code&scope=${twitch.scopes.join(' ')}`
     )
   }
 

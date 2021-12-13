@@ -1,3 +1,11 @@
+export type TwitchModerator = {
+  user_id: string
+  user_login: string
+  user_name: string
+}
+
+/* Responses */
+
 export type TokenResponse = {
   access_token: string
   expires_in: number
@@ -18,4 +26,8 @@ export type TwitchUserResponse = {
   view_count: number
   email: string
   created_at: string
+}
+
+export type TwitchModeratorResponse = {
+  data: Array<TwitchModerator>
 }

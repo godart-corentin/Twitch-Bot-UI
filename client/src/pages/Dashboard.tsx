@@ -1,15 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { UserContext } from "../context";
 
-import { useUserData } from "../lib/auth";
+import { TwitchService } from "../services";
 
 export const Dashboard: React.FC<{}> = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error>();
+
   const navigate = useNavigate();
-  const { isLoading, data, error } = useUserData();
+  const { username, setUsername } = useContext(UserContext);
+
+  const getUserData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const { name } = await TwitchService.getUserData();
+      setIsLoading(false);
+      setUsername?.(name);
+    } catch (e) {
+      setIsLoading(false);
+      setError(e as Error);
+    }
+  }, [setUsername]);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    getUserData();
+  }, [getUserData]);
 
   useEffect(() => {
     if (error) {
@@ -22,7 +38,7 @@ export const Dashboard: React.FC<{}> = () => {
   return (
     <div>
       <p>Dashboard</p>
-      {data && <p>{data.name}</p>}
+      {username && <p>{username}</p>}
     </div>
   );
 };

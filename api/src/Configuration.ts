@@ -27,7 +27,9 @@ export class Configuration implements IConfiguration {
     this.twitch = {
       clientID: process.env.TWITCH_CLIENT_ID || '',
       clientSecret: process.env.TWITCH_CLIENT_SECRET || '',
-      redirectURI: process.env.TWITCH_REDIRECT_URI || ''
+      redirectURI: process.env.TWITCH_REDIRECT_URI || '',
+      channelId: process.env.CHANNEL_ID || '',
+      scopes: ['user:read:email', 'moderation:read']
     }
   }
 }

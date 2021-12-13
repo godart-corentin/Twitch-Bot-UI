@@ -1,33 +1,21 @@
-import { FC, createContext, useState, useEffect } from "react";
+import { FC, createContext, useState } from "react";
 
 type UserContextType = {
-  code: string;
-  saveCode?: (newCode: string) => void;
+  username: string;
+  setUsername?: (username: string) => void;
 };
 
 const defaultState: UserContextType = {
-  code: "",
+  username: "",
 };
 
 export const UserContext = createContext<UserContextType>(defaultState);
 
 const UserProvider: FC = ({ children }) => {
-  const [code, setCode] = useState<string>(defaultState.code);
-
-  useEffect(() => {
-    const storedCode = localStorage.getItem("twibot-ui/code");
-    if (storedCode) {
-      setCode(storedCode);
-    }
-  }, []);
-
-  const saveCode = (newCode: string) => {
-    setCode(newCode);
-    localStorage.setItem("twibot-ui/code", newCode);
-  };
+  const [username, setUsername] = useState<string>("");
 
   return (
-    <UserContext.Provider value={{ code, saveCode }}>
+    <UserContext.Provider value={{ username, setUsername }}>
       {children}
     </UserContext.Provider>
   );
