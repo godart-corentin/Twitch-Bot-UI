@@ -36,27 +36,35 @@ export class TwitchUserController {
             tokens.accessToken
           )
           if (user) {
-            const isUserAllowed = await twitchUserService.isUserAllowed(
-              tokens.accessToken,
-              user.id
-            )
+            const isUserAllowed = await twitchUserService.isUserAllowed(user.id)
             if (isUserAllowed) {
               return reply.code(200).send({
-                name: user.display_name
+                name: user.display_name,
+                picture: user.profile_image_url
               })
             } else {
+              reply.clearCookie('__HOST-Token', {
+                httpOnly: false,
+                path: '/'
+              })
+
               return reply.code(401).send({
                 status: 401,
-                message: "Vous n'êtes pas autorisés."
+                message: "You're not allowed to access this content."
               } as MessageResponse)
             }
           }
         }
       }
     }
+    reply.clearCookie('__HOST-Token', {
+      httpOnly: false,
+      path: '/'
+    })
+
     return reply.code(401).send({
       status: 401,
-      message: 'Le token est invalide.'
+      message: 'The token is invalid'
     } as MessageResponse)
   }
 }

@@ -29,7 +29,7 @@ export class Configuration implements IConfiguration {
       clientSecret: process.env.TWITCH_CLIENT_SECRET || '',
       redirectURI: process.env.TWITCH_REDIRECT_URI || '',
       channelId: process.env.CHANNEL_ID || '',
-      scopes: ['user:read:email', 'moderation:read']
+      scopes: ['user:read:email']
     }
   }
 }

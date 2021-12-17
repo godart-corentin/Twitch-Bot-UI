@@ -3,23 +3,24 @@ import axios from 'axios'
 
 import { IConfiguration } from '../Configuration'
 import { TwitchUserResponse } from '../lib/types'
-import { ITwitchChannelService } from '.'
+import { IWhitelistService } from '.'
 
 export interface ITwitchUserService {
   getUserFromToken(token: string): Promise<TwitchUserResponse | null>
+  isUserAllowed(userId: string): Promise<boolean>
 }
 
 @singleton()
 export class TwitchUserService implements ITwitchUserService {
   private _configuration: IConfiguration
-  private _twitchChannelService: ITwitchChannelService
+  private _whitelistService: IWhitelistService
 
   constructor(
     @inject('IConfiguration') configuration: IConfiguration,
-    @inject('ITwitchChannelService') twitchChannelService: ITwitchChannelService
+    @inject('IWhitelistService') whitelistService: IWhitelistService
   ) {
     this._configuration = configuration
-    this._twitchChannelService = twitchChannelService
+    this._whitelistService = whitelistService
   }
 
   async getUserFromToken(token: string): Promise<TwitchUserResponse | null> {
@@ -36,16 +37,14 @@ export class TwitchUserService implements ITwitchUserService {
     }
   }
 
-  async isUserAllowed(token: string, userId: string): Promise<boolean> {
+  async isUserAllowed(userId: string): Promise<boolean> {
     try {
       let allowed = false
-      const moderators = await this._twitchChannelService.getModerators(token)
-      console.log(moderators)
-      if (moderators) {
-        for (const moderator of moderators) {
-          if (userId === moderator.user_id) {
-            allowed = true
-          }
+
+      const authorizedUsers = this._whitelistService.getAuthorizedUsers()
+      for (const user of authorizedUsers) {
+        if (userId === user.id.toString()) {
+          allowed = true
         }
       }
 

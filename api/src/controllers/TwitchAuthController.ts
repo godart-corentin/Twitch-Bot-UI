@@ -48,7 +48,7 @@ export class TwitchAuthController {
 
           return reply.code(200).send({
             status: 200,
-            message: 'La connexion a bien été effectuée.'
+            message: 'Connection established.'
           } as MessageResponse)
         }
       }
@@ -56,7 +56,7 @@ export class TwitchAuthController {
 
     return reply.code(400).send({
       status: 200,
-      message: "Le code n'a pas été fourni."
+      message: 'The code is missing.'
     } as MessageResponse)
   }
 }

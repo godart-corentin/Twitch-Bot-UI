@@ -3,6 +3,7 @@ export type MessageResponse = {
   message: string;
 };
 
-export type GetUserResponse = {
-  name: string;
+export type VerifyCodeResponse = {
+  success: boolean;
+  error: string | null;
 };

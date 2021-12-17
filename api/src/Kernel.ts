@@ -5,9 +5,9 @@ import { Configuration } from './Configuration'
 import {
   LoggerService,
   TokenService,
+  WhitelistService,
   TwitchUserService,
-  TwitchTokenService,
-  TwitchChannelService
+  TwitchTokenService
 } from './services'
 
 export class Kernel {
@@ -19,12 +19,13 @@ export class Kernel {
     container
       .register('IApplication', { useClass: Application })
       .register('IConfiguration', { useClass: Configuration })
-      //services
-      .register('ILoggerService', { useClass: LoggerService })
-      .register('ITokenService', { useClass: TokenService })
+      //Twitch services
       .register('ITwitchUserService', { useClass: TwitchUserService })
       .register('ITwitchTokenService', { useClass: TwitchTokenService })
-      .register('ITwitchChannelService', { useClass: TwitchChannelService })
+      // Other services
+      .register('ILoggerService', { useClass: LoggerService })
+      .register('ITokenService', { useClass: TokenService })
+      .register('IWhitelistService', { useClass: WhitelistService })
   }
 
   start() {

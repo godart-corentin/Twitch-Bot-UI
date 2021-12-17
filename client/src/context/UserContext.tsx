@@ -1,21 +1,22 @@
 import { FC, createContext, useState } from "react";
+import { User } from "../lib/types";
 
 type UserContextType = {
-  username: string;
-  setUsername?: (username: string) => void;
+  user: User | null;
+  setUser?: (user: User | null) => void;
 };
 
 const defaultState: UserContextType = {
-  username: "",
+  user: null,
 };
 
 export const UserContext = createContext<UserContextType>(defaultState);
 
 const UserProvider: FC = ({ children }) => {
-  const [username, setUsername] = useState<string>("");
+  const [user, setUser] = useState<User | null>(null);
 
   return (
-    <UserContext.Provider value={{ username, setUsername }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,0 +1,14 @@
+.wrapper {
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  position: relative;
+}
+
+.main {
+  background-color: #262837;
+  padding: 2em;
+
+  flex: 1;
+}
