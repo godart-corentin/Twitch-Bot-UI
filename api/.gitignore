@@ -1,4 +1,5 @@
 .DS_STORE
+.idea
 
 node_modules
 dist
@@ -6,3 +7,6 @@ dist
 .env
 
 whitelist.json
+commands.json
+events.json
+schedulers.json

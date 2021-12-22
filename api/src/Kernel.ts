@@ -7,7 +7,9 @@ import {
   TokenService,
   WhitelistService,
   TwitchUserService,
-  TwitchTokenService
+  TwitchTokenService,
+  CommandService,
+  JSONService
 } from './services'
 
 export class Kernel {
@@ -22,10 +24,12 @@ export class Kernel {
       //Twitch services
       .register('ITwitchUserService', { useClass: TwitchUserService })
       .register('ITwitchTokenService', { useClass: TwitchTokenService })
+      .register('ICommandService', { useClass: CommandService })
       // Other services
       .register('ILoggerService', { useClass: LoggerService })
       .register('ITokenService', { useClass: TokenService })
       .register('IWhitelistService', { useClass: WhitelistService })
+      .register('IJSONService', { useClass: JSONService })
   }
 
   start() {

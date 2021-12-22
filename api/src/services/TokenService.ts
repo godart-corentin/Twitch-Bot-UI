@@ -2,13 +2,13 @@ import { inject, singleton } from 'tsyringe'
 import jwt from 'jsonwebtoken'
 
 import { IConfiguration } from '../Configuration'
-import { Session } from '../lib/types'
+import { UserTokens } from '../lib/types'
 import { ITwitchTokenService } from '.'
 
 export interface ITokenService {
-  isExpired(session: Session): boolean
-  generateJWT(session: Session): Promise<string | undefined>
-  verifyJWT(token: string): Promise<Session>
+  isExpired(userTokens: UserTokens): boolean
+  generateJWT(userTokens: UserTokens): Promise<string | undefined>
+  verifyJWT(token: string): Promise<UserTokens>
 }
 
 @singleton()
@@ -24,18 +24,18 @@ export class TokenService implements ITokenService {
     this._twitchTokenService = twitchTokenService
   }
 
-  isExpired(session: Session): boolean {
+  isExpired(userTokens: UserTokens): boolean {
     const now = new Date()
-    const expiredDate = new Date(session.tokenCreationDate)
-    expiredDate.setSeconds(expiredDate.getSeconds() + session.expiresIn)
+    const expiredDate = new Date(userTokens.tokenCreationDate)
+    expiredDate.setSeconds(expiredDate.getSeconds() + userTokens.expiresIn)
 
     return now > expiredDate
   }
 
-  generateJWT(session: Session): Promise<string | undefined> {
+  generateJWT(userTokens: UserTokens): Promise<string | undefined> {
     return new Promise((resolve, reject) => {
       jwt.sign(
-        session,
+        userTokens,
         this._configuration.app.jwtSecret,
         {},
         function (err, token) {
@@ -48,7 +48,7 @@ export class TokenService implements ITokenService {
     })
   }
 
-  verifyJWT(token: string): Promise<Session> {
+  verifyJWT(token: string): Promise<UserTokens> {
     return new Promise((resolve, reject) => {
       jwt.verify(
         token,
@@ -57,13 +57,13 @@ export class TokenService implements ITokenService {
           if (err) {
             reject(err)
           }
-          resolve(decoded as Session)
+          resolve(decoded as UserTokens)
         }
       )
     })
   }
 
-  async verifyTokens(token: string): Promise<Session | null> {
+  async verifyTokens(token: string): Promise<UserTokens | null> {
     try {
       let tokens = await this.verifyJWT(token)
       if (this.isExpired(tokens)) {

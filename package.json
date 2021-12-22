@@ -1,0 +1,14 @@
+{
+  "name": "Twitch-Bot-UI",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/godart-corentin/Twitch-Bot-UI.git",
+  "author": "Corentin Godart <godartcn@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"cd api && yarn dev\" \"cd client && yarn start\""
+  },
+  "dependencies": {
+    "concurrently": "^6.5.1"
+  }
+}
