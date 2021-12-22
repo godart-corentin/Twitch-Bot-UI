@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { User } from "../../lib/types";
 import { menu } from "../../menu";
 import styles from "./Sidebar.module.css";
+import { useState } from "react";
 
 type SidebarProps = {
   user: User | null;
@@ -11,12 +12,17 @@ type SidebarProps = {
 
 export const Sidebar: React.FC<SidebarProps> = ({ user }) => {
   const location = useLocation();
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
 
   return (
-    <div className={styles.wrapper}>
+    <div
+      className={styles.wrapper}
+      onMouseEnter={() => setIsSidebarHovered(true)}
+      onMouseLeave={() => setIsSidebarHovered(false)}
+    >
       <div>
         <div className={styles.logo}>
-          <h2>Twitch UIBot</h2>
+          <h2>{isSidebarHovered ? "Twitch UIBot" : "UIBot"}</h2>
         </div>
         <ul className={styles.menu}>
           {menu.map((item, idx) => (
@@ -40,14 +46,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ user }) => {
               <img src={user.picture} alt="User avatar" />
               <span>{user.name}</span>
             </div>
-            <div className={styles.dropdown}>
-              <span>
-                <FontAwesomeIcon icon="ellipsis-h" size="xs" />
-              </span>
-              <div>
-                <p>Se déconnecter</p>
-              </div>
-            </div>
+            <Link to="/disconnect" className={styles.disconnect}>
+              <FontAwesomeIcon icon="sign-out-alt" size="1x" />
+            </Link>
           </div>
         </div>
       )}

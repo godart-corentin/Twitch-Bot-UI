@@ -7,6 +7,7 @@ import {
   faCalendarAlt,
   faCircleNotch,
   faEllipsisH,
+  faSignOutAlt,
   faTachometerAlt,
   faTerminal,
   faUsers,
@@ -24,7 +25,8 @@ library.add(
   faEllipsisH,
   faCircleNotch,
   faCalendarAlt,
-  faBullhorn
+  faBullhorn,
+  faSignOutAlt
 );
 
 ReactDOM.render(

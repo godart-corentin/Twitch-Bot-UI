@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-import styles from "./Disconnect.module.css";
-
 const cookies = new Cookies();
 
 export const Disconnect: React.FC<{}> = () => {
@@ -16,5 +14,5 @@ export const Disconnect: React.FC<{}> = () => {
     }
   }, [navigate]);
 
-  return <div className={styles.wrapper}></div>;
+  return <div></div>;
 };
