@@ -5,7 +5,7 @@ import fastifyCookie from 'fastify-cookie'
 
 import { ILoggerService } from './services'
 import controllers from './controllers'
-import { Route } from './lib/types'
+import { MiddlewareFn, Route } from './lib/types'
 import { IConfiguration } from './Configuration'
 
 export interface IApplication {
@@ -48,12 +48,20 @@ export class Application implements IApplication {
       const routes: Array<Route> = Reflect.getMetadata('routes', controller)
 
       for (const route of routes) {
+        const middlewares: Array<MiddlewareFn> =
+          Reflect.getMetadata(
+            'middlewares',
+            controller.prototype,
+            route.methodName
+          ) || []
+
         this._app.route({
           method: route.requestMethod,
           url: '/api' + prefix + route.path,
           handler: (req, reply) => {
             instance[route.methodName](req, reply)
-          }
+          },
+          preHandler: middlewares
         })
       }
     }

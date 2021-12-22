@@ -1,13 +1,10 @@
 import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify'
 
-export type Route = {
-  path: string
-  requestMethod: 'GET' | 'POST' | 'DELETE' | 'OPTIONS' | 'PUT'
-  methodName: string
-}
-
-export type MiddlewareFn = (
+export const AuthGuard = (
   request: FastifyRequest,
   reply: FastifyReply,
   done: HookHandlerDoneFunction
-) => void
+) => {
+  console.log(request.cookies)
+  done()
+}
