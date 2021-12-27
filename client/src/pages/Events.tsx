@@ -1,7 +1,1 @@
-import { Layout } from "../components";
-
-export const Events: React.FC<{}> = () => (
-  <Layout>
-    <p>Events</p>
-  </Layout>
-);
+export const Events: React.FC<{}> = () => <p>Events</p>;

@@ -1,7 +1,1 @@
-import { Layout } from "../components";
-
-export const Users: React.FC<{}> = () => (
-  <Layout>
-    <p>Users</p>
-  </Layout>
-);
+export const Users: React.FC<{}> = () => <p>Users</p>;

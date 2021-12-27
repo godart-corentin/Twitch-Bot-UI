@@ -17,7 +17,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ user }) => {
   return (
     <div
       className={styles.wrapper}
-      onMouseEnter={() => setIsSidebarHovered(true)}
+      onMouseEnter={() => {
+        setTimeout(() => {
+          setIsSidebarHovered(true);
+        }, 150);
+      }}
       onMouseLeave={() => setIsSidebarHovered(false)}
     >
       <div>
@@ -29,11 +33,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ user }) => {
             <li
               key={idx}
               className={
-                location.pathname === item.path ? styles.active : undefined
+                location.pathname === item.route.path ? styles.active : undefined
               }
             >
-              <Link to={item.path}>
-                <FontAwesomeIcon icon={item.icon} /> <span>{item.name}</span>
+              <Link to={item.route.path}>
+                <FontAwesomeIcon icon={item.icon} /> <span>{item.route.name}</span>
               </Link>
             </li>
           ))}
@@ -46,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ user }) => {
               <img src={user.picture} alt="User avatar" />
               <span>{user.name}</span>
             </div>
-            <Link to="/disconnect" className={styles.disconnect}>
+            <Link to="/dashboard/disconnect" className={styles.disconnect}>
               <FontAwesomeIcon icon="sign-out-alt" size="1x" />
             </Link>
           </div>

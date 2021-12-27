@@ -1,7 +1,1 @@
-import { Layout } from "../components";
-
-export const Commands: React.FC<{}> = () => (
-  <Layout>
-    <p>Commands</p>
-  </Layout>
-);
+export const Commands: React.FC<{}> = () => <p>Commands</p>;

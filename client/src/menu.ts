@@ -2,28 +2,38 @@ import { MenuItem } from "./lib/types";
 
 export const menu: Array<MenuItem> = [
   {
-    name: "Dashboard",
     icon: "tachometer-alt",
-    path: "/dashboard",
+    route: {
+      name: "Dashboard",
+      path: "/dashboard",
+    }
   },
   {
-    name: "Commands",
     icon: "terminal",
-    path: "/dashboard/commands",
+    route: {
+      name: "Commands",
+      path: "/dashboard/commands",
+    }
   },
   {
-    name: "Schedulers",
     icon: "calendar-alt",
-    path: "/dashboard/schedulers",
+    route: {
+      name: "Schedulers",
+      path: "/dashboard/schedulers",
+    }
   },
   {
-    name: "Events",
     icon: "bullhorn",
-    path: "/dashboard/events",
+    route: {
+      name: "Events",
+      path: "/dashboard/events",
+    }
   },
   {
-    name: "Users",
     icon: "users",
-    path: "/dashboard/users",
+    route: {
+      name: "Users",
+      path: "/dashboard/users",
+    }
   },
 ];

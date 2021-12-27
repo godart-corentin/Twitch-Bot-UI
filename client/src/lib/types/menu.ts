@@ -1,7 +1,8 @@
 import { IconName } from "@fortawesome/fontawesome-svg-core";
 
+import { Route } from "./routes";
+
 export type MenuItem = {
-  name: string;
   icon: IconName;
-  path: string;
+  route: Route;
 };

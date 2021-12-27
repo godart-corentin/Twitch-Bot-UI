@@ -3,10 +3,10 @@
   width: 100%;
 
   display: flex;
-  position: relative;
 }
 
 .main {
+  position: relative;
   background-color: #262837;
   padding: 2em;
 

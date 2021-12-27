@@ -1,41 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { Button, Loader } from "../../components";
 import { TwitchService } from "../../services";
+import { UserContext } from "../../context";
 
 import styles from "./Auth.module.css";
 
 export const Auth: React.FC<{}> = () => {
-  const [success, setSuccess] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const { authenticated, setAuthenticated } = useContext(UserContext);
 
-  const verifyCode = async (code: string) => {
-    setIsLoading(true);
-    const { success: scc, error: err } = await TwitchService.verifyCode(code);
-    if (err) {
-      setError(err);
-    }
-    setSuccess(scc);
-    setIsLoading(false);
-  };
+  const verifyCode = useCallback((code: string) => {
+    return new Promise<boolean>(async (resolve, reject) => {
+      setIsLoading(true);
+      const { success, error: err } = await TwitchService.verifyCode(code);
+      if (err) {
+        reject(err);
+      } else {
+        resolve(success);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const newCode = params.get("code");
     if (newCode) {
-      verifyCode(newCode);
+      verifyCode(newCode)
+        .then((success) => {
+          setAuthenticated?.(success);
+        })
+        .catch((err) => {
+          setError(err);
+        });
     }
-  }, [params]);
+  }, [params, verifyCode, setAuthenticated]);
 
   useEffect(() => {
-    if (success) {
+    if (authenticated) {
       navigate("/dashboard");
     }
-  }, [success, navigate]);
+  }, [authenticated, navigate]);
 
   return (
     <div className={styles.wrapper}>

@@ -1,36 +1,49 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import { Loader } from "..";
 import { UserContext } from "../../context";
 import { TwitchService } from "../../services";
 import { Sidebar } from "../Sidebar";
+import { User } from "../../lib/types";
+
 import styles from "./Layout.module.css";
 
-export const Layout: React.FC<{}> = ({ children }) => {
+export const Layout: React.FC<{}> = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const getUserData = useCallback(async () => {
-    setIsLoading(true);
-    const { data, error } = await TwitchService.getUserData();
-    setUser?.(data);
-    setIsLoading(false);
-    if (error) {
-      navigate("/disconnect");
-    }
-  }, [setUser, navigate]);
+    return new Promise<User | null>(async (resolve, reject) => {
+      setIsLoading(true);
+      const { data, error } = await TwitchService.getUserData();
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
+    });
+  }, []);
 
   useEffect(() => {
-    getUserData();
-  }, [getUserData]);
+    getUserData()
+      .then((data) => {
+        setUser?.(data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        navigate("/");
+      });
+  }, [getUserData, navigate, setUser]);
 
   return (
     <div className={styles.wrapper}>
-      {isLoading && <Loader />}
       <Sidebar user={user} />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        {isLoading && <Loader />}
+        <Outlet />
+      </main>
     </div>
   );
 };
