@@ -23,8 +23,8 @@ export const Auth = () => {
       const code = params.get("code");
       if (code) {
         setIsLoading(true);
-        const { success, error: err } = await verifyCode(code);
         if (mounted) {
+          const { success, error: err } = await verifyCode(code);
           if (success) {
             setAuthenticated?.(success);
           }

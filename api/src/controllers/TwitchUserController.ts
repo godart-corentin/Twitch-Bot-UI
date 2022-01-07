@@ -39,8 +39,10 @@ export class TwitchUserController {
             const isUserAllowed = await twitchUserService.isUserAllowed(user.id)
             if (isUserAllowed) {
               return reply.code(200).send({
-                name: user.display_name,
-                picture: user.profile_image_url
+                user: {
+                  name: user.display_name,
+                  picture: user.profile_image_url
+                }
               })
             } else {
               reply.clearCookie('__HOST-Token', {

@@ -1,3 +1,9 @@
+import { Heading } from "@chakra-ui/react";
+
 export const Dashboard = () => {
-    return <p>Dashboard</p>
-}
+  return (
+    <>
+      <Heading size="lg">Dashboard</Heading>
+    </>
+  );
+};

@@ -40,7 +40,7 @@ export const Layout = () => {
   return (
     <Flex h="100vh" w="100%">
       <Sidebar routePath={location.pathname} user={user} />
-      <Box as="main" flex={1} bg={bgMain} position="relative">
+      <Box as="main" flex={1} p="3em" bg={bgMain} position="relative">
         <ColorModeSwitcher position="absolute" top="1em" right="1em" />
         {isLoading && <Loader />}
         <Outlet />

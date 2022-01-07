@@ -8,9 +8,14 @@ import {
   faCalendarAlt,
   faChevronRight,
   faCircleNotch,
+  faCrown,
+  faMoon,
+  faShieldAlt,
   faSignOutAlt,
+  faSun,
   faTachometerAlt,
   faTerminal,
+  faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +35,12 @@ library.add(
   faBullhorn,
   faUsers,
   faSignOutAlt,
-  faCircleNotch
+  faCircleNotch,
+  faCrown,
+  faShieldAlt,
+  faUser,
+  faSun,
+  faMoon
 );
 
 ReactDOM.render(

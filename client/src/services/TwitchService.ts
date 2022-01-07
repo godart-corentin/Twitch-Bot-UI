@@ -1,9 +1,9 @@
 import { AxiosError } from "axios";
 
-import { GetUserDataResponse, User, VerifyCodeResponse } from "../lib/types";
+import { GetUserData, GetUserDataAPIResponse, Success } from "../lib/types";
 import axiosClient from "../lib/axios";
 
-export const verifyCode = async (code: string): Promise<VerifyCodeResponse> => {
+export const verifyCode = async (code: string): Promise<Success> => {
   try {
     await axiosClient.get(`/twitch/auth/verifyCode?code=${code}`);
     return {
@@ -25,11 +25,13 @@ export const verifyCode = async (code: string): Promise<VerifyCodeResponse> => {
   }
 };
 
-export const getUserData = async (): Promise<GetUserDataResponse> => {
+export const getUserData = async (): Promise<GetUserData> => {
   try {
-    const { data } = await axiosClient.get<User | null>("/twitch/user/me");
+    const { data } = await axiosClient.get<GetUserDataAPIResponse>(
+      "/twitch/user/me"
+    );
     return {
-      user: data,
+      user: data.user,
       error: null,
     };
   } catch (err) {
