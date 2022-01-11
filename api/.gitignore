@@ -10,3 +10,5 @@ whitelist.json
 commands.json
 events.json
 schedulers.json
+
+coverage
