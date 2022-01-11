@@ -1,0 +1,9 @@
+.dataTable {
+  width: 100%;
+  max-width: 100%;
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 0.5em 1em;
+}

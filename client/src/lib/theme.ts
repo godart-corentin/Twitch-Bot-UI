@@ -9,12 +9,24 @@ const config: ThemeConfig = {
 const colors = {
   dark: {
     700: "#24253a",
+    750: "#1f2036",
     800: "#1b1c31",
     900: "#111224",
   },
+  active: "#F6AD55",
+};
+
+const theme = {
+  global: {
+    body: {
+      overflowX: "hidden",
+    },
+  },
+  config,
+  colors,
 };
 
 // 3. extend the theme
-const theme = extendTheme({ config, colors });
+const customTheme = extendTheme(theme);
 
-export default theme;
+export default customTheme;

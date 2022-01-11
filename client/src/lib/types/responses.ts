@@ -29,3 +29,13 @@ export type GetCommands = {
   commands: Array<Command>;
   error: string | null;
 };
+
+/** Get Prefix */
+export type GetPrefixAPIResponse = {
+  prefix: string;
+};
+
+export type GetPrefix = {
+  prefix: string | null;
+  error: string | null;
+};

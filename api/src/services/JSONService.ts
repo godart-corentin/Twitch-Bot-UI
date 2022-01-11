@@ -7,7 +7,7 @@ export interface IJSONService {
 }
 
 @singleton()
-export class JSONService {
+export class JSONService implements IJSONService {
   parseFile<T>(filePath: string): Promise<T> {
     return new Promise((resolve, reject) => {
       const fileContent = fs.readFileSync(filePath, 'utf-8')

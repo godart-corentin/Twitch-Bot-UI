@@ -1,15 +1,11 @@
 import { inject, singleton } from 'tsyringe'
-import path from 'path'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Command, CommandFile, GetCommandOptions } from '../lib/types'
-import { IJSONService } from '.'
+import { Command, GetCommandOptions } from '../lib/types'
+import { IJSONCommandService } from '.'
 
 export interface ICommandService {
-  getPrefix(): Promise<string>
   getAllCommands(): Promise<Array<Command>>
-  saveCommandFile(): Promise<void>
-
   getCommand(options: GetCommandOptions): Promise<Command | null>
   createCommand(commandData: Command): Promise<Command>
   updateCommand(commandData: Command, commandId: string): Promise<Command>
@@ -18,12 +14,13 @@ export interface ICommandService {
 
 @singleton()
 export class CommandService implements ICommandService {
-  private _jsonService: IJSONService
+  private _jsonCommandService: IJSONCommandService
   private _commands: Array<Command>
-  private _prefix: string
 
-  constructor(@inject('IJSONService') jsonService: IJSONService) {
-    this._jsonService = jsonService
+  constructor(
+    @inject('IJSONCommandService') jsonCommandService: IJSONCommandService
+  ) {
+    this._jsonCommandService = jsonCommandService
 
     this.initializeData()
   }
@@ -31,50 +28,19 @@ export class CommandService implements ICommandService {
   // Initialisation
   private async initializeData(): Promise<void> {
     await this.getAllCommands()
-    await this.getPrefix()
   }
 
   // JSON Actions
-  async getPrefix(): Promise<string> {
-    if (this._prefix) {
-      return this._prefix
-    }
-
-    const data = await this._jsonService.parseFile<CommandFile>(
-      path.join(__dirname, '../../commands.json')
-    )
-
-    this._prefix = data.prefix
-
-    return this._prefix
-  }
-
   async getAllCommands(): Promise<Array<Command>> {
     if (this._commands) {
       return this._commands
     }
 
-    const data = await this._jsonService.parseFile<CommandFile>(
-      path.join(__dirname, '../../commands.json')
-    )
+    const commands = await this._jsonCommandService.getCommands()
 
-    this._commands = data.commands
+    this._commands = commands
 
     return this._commands || []
-  }
-
-  async saveCommandFile(): Promise<void> {
-    const prefix = await this.getPrefix()
-    const commands = await this.getAllCommands()
-
-    const newCommandFile: CommandFile = {
-      prefix,
-      commands
-    }
-    await this._jsonService.saveFile(
-      path.join(__dirname, '../../commands.json'),
-      JSON.stringify(newCommandFile)
-    )
   }
 
   // CRUD
@@ -107,7 +73,9 @@ export class CommandService implements ICommandService {
       }
       this._commands.push(newCommand)
 
-      await this.saveCommandFile()
+      await this._jsonCommandService.saveCommandsFile({
+        commands: this._commands
+      })
 
       return newCommand
     } else {
@@ -130,7 +98,9 @@ export class CommandService implements ICommandService {
       const cmdIndex = this._commands.findIndex((cmd) => cmd.id === commandId)
       this._commands[cmdIndex] = myCommand
 
-      await this.saveCommandFile()
+      await this._jsonCommandService.saveCommandsFile({
+        commands: this._commands
+      })
 
       return myCommand
     } else {
@@ -143,7 +113,9 @@ export class CommandService implements ICommandService {
     if (command) {
       this._commands = this._commands.filter((com) => com.id !== commandId)
 
-      await this.saveCommandFile()
+      await this._jsonCommandService.saveCommandsFile({
+        commands: this._commands
+      })
     } else {
       throw "This command doesn't exist."
     }

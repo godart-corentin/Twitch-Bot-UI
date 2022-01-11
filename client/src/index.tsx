@@ -6,10 +6,12 @@ import { fab, faTwitch } from "@fortawesome/free-brands-svg-icons";
 import {
   faBullhorn,
   faCalendarAlt,
+  faCheckCircle,
   faChevronRight,
   faCircleNotch,
   faCrown,
   faMoon,
+  faPlusCircle,
   faShieldAlt,
   faSignOutAlt,
   faSun,
@@ -40,7 +42,9 @@ library.add(
   faShieldAlt,
   faUser,
   faSun,
-  faMoon
+  faMoon,
+  faPlusCircle,
+  faCheckCircle
 );
 
 ReactDOM.render(

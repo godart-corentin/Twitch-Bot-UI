@@ -27,3 +27,9 @@ export type DeleteCommandRequest = FastifyRequest<{
     id: string
   }
 }>
+
+export type UpdatePrefixRequest = FastifyRequest<{
+  Body: {
+    prefix: string
+  }
+}>

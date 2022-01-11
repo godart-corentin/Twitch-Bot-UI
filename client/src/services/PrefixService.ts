@@ -1,20 +1,13 @@
 import { AxiosError } from "axios";
 
 import axiosClient from "../lib/axios";
-import {
-  Command,
-  GetCommands,
-  GetCommandsAPIResponse,
-  Success,
-} from "../lib/types";
+import { GetPrefix, GetPrefixAPIResponse } from "../lib/types";
 
-export const getCommands = async (): Promise<GetCommands> => {
+export const getPrefix = async (): Promise<GetPrefix> => {
   try {
-    const { data } = await axiosClient.get<GetCommandsAPIResponse>(
-      `/commands/`
-    );
+    const { data } = await axiosClient.get<GetPrefixAPIResponse>(`/prefix/`);
     return {
-      commands: data.commands || [],
+      prefix: data.prefix,
       error: null,
     };
   } catch (err) {
@@ -23,21 +16,22 @@ export const getCommands = async (): Promise<GetCommands> => {
     if (responseError.response?.data.status === 401) {
       error = responseError.response.data.message;
     } else {
-      error = "Error while fetching commands.";
+      error = "Error while fetching prefix.";
     }
     return {
-      commands: [],
+      prefix: null,
       error,
     };
   }
 };
 
-export const createCommand = async (newCommand: Command): Promise<Success> => {
+export const updatePrefix = async (newPrefix: string): Promise<GetPrefix> => {
   try {
-    await axiosClient.post("/commands/", newCommand);
-
+    const { data } = await axiosClient.put<GetPrefixAPIResponse>(`/prefix/`, {
+      prefix: newPrefix,
+    });
     return {
-      success: true,
+      prefix: data.prefix,
       error: null,
     };
   } catch (err) {
@@ -46,10 +40,10 @@ export const createCommand = async (newCommand: Command): Promise<Success> => {
     if (responseError.response?.data.status === 401) {
       error = responseError.response.data.message;
     } else {
-      error = "Error while creating the command.";
+      error = "Error while updating prefix.";
     }
     return {
-      success: false,
+      prefix: null,
       error,
     };
   }

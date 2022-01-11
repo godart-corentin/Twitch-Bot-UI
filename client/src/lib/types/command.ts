@@ -11,3 +11,9 @@ export type Command = {
   message: string;
   policies: CommandPolicies;
 };
+
+export type AddCommandData = {
+  name: string;
+  command: string;
+  message: string;
+};

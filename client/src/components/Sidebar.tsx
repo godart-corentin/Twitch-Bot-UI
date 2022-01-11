@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { menu } from "../lib/menu";
 import { User } from "../lib/types";
 import { Link } from "react-router-dom";
+import useWindowDimensions from "../hooks/window";
 
 type SidebarProps = {
   routePath: string;
@@ -23,9 +24,9 @@ export const Sidebar = ({ routePath, user }: SidebarProps) => {
   const [isOpened, setIsOpened] = useState(true);
   const [animationDone, setAnimationDone] = useState(false);
 
-  const bgBar = useColorModeValue("white", "dark.700");
-  const bgIcon = useColorModeValue("gray.200", "dark.900");
   const bgUser = useColorModeValue("gray.100", "dark.800");
+
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -37,55 +38,72 @@ export const Sidebar = ({ routePath, user }: SidebarProps) => {
     };
   }, [isOpened]);
 
+  useEffect(() => {
+    if (width < 1000) {
+      setIsOpened(false);
+    }
+  }, [width]);
+
+  const displayMenu = () => {
+    return (
+      <>
+        {menu.map((item, idx) => (
+          <Link
+            key={idx}
+            to={item.route.path}
+            style={{
+              textDecoration: "none",
+              color: routePath === item.route.path ? "#F6AD55" : undefined,
+            }}
+          >
+            <Flex alignItems="center" h="30px">
+              <FontAwesomeIcon icon={item.icon} style={{ width: 20 }} />{" "}
+              <Fade in={isOpened}>
+                <Text
+                  as="span"
+                  ml=".5em"
+                  display={animationDone ? "none" : "inline"}
+                >
+                  {item.route.name}
+                </Text>
+              </Fade>
+            </Flex>
+          </Link>
+        ))}
+      </>
+    );
+  };
+
   return (
     <Flex
       h="100%"
       w={isOpened ? "250px" : "100px"}
       p="3em 1em"
-      bg={bgBar}
+      bg={useColorModeValue("white", "dark.700")}
       flexDirection="column"
       justifyContent="space-between"
       position="relative"
-      transition="0.3s ease-out"
+      transition="width 0.3s ease-out"
       boxShadow="xl"
     >
       <Flex flexDirection="column" alignItems="center">
         <Flex alignItems="center" textAlign="center" mb="3em" h="30px">
-          <FontAwesomeIcon icon={["fab", "twitch"]} size="lg" />
+          <FontAwesomeIcon icon={["fab", "twitch"]} size="lg" color="#F6AD55" />
           <Fade in={isOpened}>
-            <Heading
-              fontSize="xl"
-              fontWeight="bold"
-              ml=".25em"
-              display={animationDone ? "none" : "inline"}
-            >
-              UIBot
-            </Heading>
+            <Link to="/dashboard" style={{ color: "#F6AD55" }}>
+              <Heading
+                fontSize="xl"
+                fontWeight="bold"
+                ml=".25em"
+                display={animationDone ? "none" : "inline"}
+              >
+                UIBot
+              </Heading>
+            </Link>
           </Fade>
         </Flex>
         <VStack spacing="2em" alignItems="flex-start" p="1em">
-          {menu.map((item, idx) => (
-            <Link
-              key={idx}
-              to={item.route.path}
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <Flex alignItems="center" h="30px">
-                <FontAwesomeIcon icon={item.icon} style={{ width: 20 }} />{" "}
-                <Fade in={isOpened}>
-                  <Text
-                    as="span"
-                    ml=".5em"
-                    display={animationDone ? "none" : "inline"}
-                  >
-                    {item.route.name}
-                  </Text>
-                </Fade>
-              </Flex>
-            </Link>
-          ))}
+          {displayMenu()}
         </VStack>
       </Flex>
       {user && (
@@ -127,13 +145,18 @@ export const Sidebar = ({ routePath, user }: SidebarProps) => {
         w="30px"
         h="30px"
         zIndex={3}
-        bg={bgIcon}
+        bg={useColorModeValue("gray.200", "dark.900")}
         boxShadow="sm"
         cursor="pointer"
         justifyContent="center"
         alignItems="center"
         borderRadius="0 50% 50% 0"
         onClick={() => setIsOpened((state) => !state)}
+        sx={{
+          "@media (max-width: 999px)": {
+            display: "none",
+          },
+        }}
       >
         <FontAwesomeIcon icon="chevron-right" width={25} height={25} />
       </Flex>
