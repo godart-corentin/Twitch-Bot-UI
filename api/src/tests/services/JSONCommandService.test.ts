@@ -5,6 +5,7 @@ import os from 'os'
 
 import { IJSONCommandService, JSONCommandService } from '../../services'
 import { Command } from '../../lib/types'
+import { rmSync } from 'fs'
 
 describe('Testing JSONCommandService class', () => {
   let jsonCommandService: IJSONCommandService
@@ -148,6 +149,13 @@ describe('Testing JSONCommandService class', () => {
 
       const commands = await jsonCommandService.getCommands()
       expect(commands).toMatchObject(commandsToMatch)
+    })
+  })
+
+  afterAll(() => {
+    rmSync(path.join(__dirname, '../dummy_data'), {
+      recursive: true,
+      force: true
     })
   })
 })

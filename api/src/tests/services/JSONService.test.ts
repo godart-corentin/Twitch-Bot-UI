@@ -12,7 +12,7 @@ describe('Testing JSONService class', () => {
 
   beforeAll(() => {
     jsonService = container.resolve(JSONService)
-    filepath = path.join(__dirname, './dummy_data/test.json')
+    filepath = path.join(__dirname, '../dummy_data/test.json')
   })
 
   describe('Saving File with incorrect content', () => {
@@ -88,7 +88,7 @@ describe('Testing JSONService class', () => {
   })
 
   afterAll(() => {
-    rmSync(path.join(__dirname, './dummy_data'), {
+    rmSync(path.join(__dirname, '../dummy_data'), {
       recursive: true,
       force: true
     })
