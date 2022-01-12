@@ -3,6 +3,7 @@ export type AppConfiguration = {
   port: string
   jwtSecret: string
   clientURL: string
+  commandsFilepath: string
 }
 
 export type TwitchConfiguration = {

@@ -40,7 +40,7 @@ export class PrefixService implements IPrefixService {
 
   async updatePrefix(prefix: string): Promise<string> {
     this._prefix = prefix
-    await this._jsonCommandService.saveCommandsFile({ prefix: this._prefix })
+    await this._jsonCommandService.savePrefix(this._prefix)
 
     return this._prefix
   }

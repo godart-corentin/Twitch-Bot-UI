@@ -4,16 +4,15 @@ import { rmSync } from 'fs'
 import 'reflect-metadata'
 import { container } from 'tsyringe'
 
-import { CommandFile } from '../lib/types'
-import { IJSONService, JSONService } from '../services'
+import { IJSONService, JSONService } from '../../services'
 
 describe('Testing JSONService class', () => {
   let jsonService: IJSONService
-  let commandFilepath: string
+  let filepath: string
 
   beforeAll(() => {
     jsonService = container.resolve(JSONService)
-    commandFilepath = path.join(__dirname, './dummy_data/commands.json')
+    filepath = path.join(__dirname, './dummy_data/test.json')
   })
 
   describe('Saving File with incorrect content', () => {
@@ -21,7 +20,7 @@ describe('Testing JSONService class', () => {
 
     it('Should rejects a string containing an error', async () => {
       try {
-        await jsonService.saveFile(commandFilepath, incorrectContent)
+        await jsonService.saveFile(filepath, incorrectContent)
       } catch (error) {
         expect(error).toBe('Error while saving the JSON file.')
       }
@@ -29,22 +28,13 @@ describe('Testing JSONService class', () => {
   })
 
   describe('Saving File with correct content', () => {
-    const content: CommandFile = {
-      commands: [
-        {
-          name: 'Test',
-          command: 't',
-          message: 'Ceci est un test',
-          policies: { admin: true, mod: true, others: true },
-          id: '1'
-        }
-      ],
-      prefix: '!'
+    const test = {
+      test: 'test'
     }
 
-    it('Should rejects a string containing an error', async () => {
+    it('Should be successful', async () => {
       try {
-        await jsonService.saveFile(commandFilepath, JSON.stringify(content))
+        await jsonService.saveFile(filepath, JSON.stringify(test))
         expect(true).toBeTruthy()
       } catch (error) {
         console.log(error)
@@ -53,17 +43,8 @@ describe('Testing JSONService class', () => {
   })
 
   describe('Saving File in unauthorized folder', () => {
-    const content: CommandFile = {
-      commands: [
-        {
-          name: 'Test',
-          command: 't',
-          message: 'Ceci est un test',
-          policies: { admin: true, mod: true, others: true },
-          id: '1'
-        }
-      ],
-      prefix: '!'
+    const test = {
+      test: 'test'
     }
     let filePath: string
 
@@ -77,7 +58,7 @@ describe('Testing JSONService class', () => {
 
     it('Should rejects a string containing an error', async () => {
       try {
-        await jsonService.saveFile(filePath, JSON.stringify(content))
+        await jsonService.saveFile(filePath, JSON.stringify(test))
       } catch (error) {
         expect(error).toBe('Error while saving the JSON file.')
       }
@@ -87,7 +68,7 @@ describe('Testing JSONService class', () => {
   describe('Parsing File with incorrect path', () => {
     it('Should rejects a string containing an error', async () => {
       try {
-        await jsonService.parseFile<CommandFile>(
+        await jsonService.parseFile<{ test: string }>(
           path.join(__dirname, './dummy_data/not_exists.json')
         )
       } catch (error) {
@@ -98,22 +79,11 @@ describe('Testing JSONService class', () => {
 
   describe('Parsing File with correct path', () => {
     it('Should parse the file correctly', async () => {
-      const commandFileExample: CommandFile = {
-        commands: [
-          {
-            name: 'Test',
-            command: 't',
-            message: 'Ceci est un test',
-            policies: { admin: true, mod: true, others: true },
-            id: '1'
-          }
-        ],
-        prefix: '!'
+      const test = {
+        test: 'test'
       }
-      const parsedFile = await jsonService.parseFile<CommandFile>(
-        commandFilepath
-      )
-      expect(parsedFile).toMatchObject(commandFileExample)
+      const parsedFile = await jsonService.parseFile<{ test: string }>(filepath)
+      expect(parsedFile).toMatchObject(test)
     })
   })
 

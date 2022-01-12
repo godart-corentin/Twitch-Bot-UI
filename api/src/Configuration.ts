@@ -21,7 +21,8 @@ export class Configuration implements IConfiguration {
       debug: process.env.DEBUG?.toLocaleLowerCase() == 'true' ?? false,
       port: process.env.PORT || '8000',
       jwtSecret: process.env.JWT_SECRET || '',
-      clientURL: process.env.CLIENT_URL || ''
+      clientURL: process.env.CLIENT_URL || '',
+      commandsFilepath: process.env.COMMANDS_FILEPATH || './commands.json'
     }
 
     this.twitch = {

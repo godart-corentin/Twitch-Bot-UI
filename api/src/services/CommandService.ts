@@ -73,9 +73,7 @@ export class CommandService implements ICommandService {
       }
       this._commands.push(newCommand)
 
-      await this._jsonCommandService.saveCommandsFile({
-        commands: this._commands
-      })
+      await this._jsonCommandService.saveCommands(this._commands)
 
       return newCommand
     } else {
@@ -98,9 +96,7 @@ export class CommandService implements ICommandService {
       const cmdIndex = this._commands.findIndex((cmd) => cmd.id === commandId)
       this._commands[cmdIndex] = myCommand
 
-      await this._jsonCommandService.saveCommandsFile({
-        commands: this._commands
-      })
+      await this._jsonCommandService.saveCommands(this._commands)
 
       return myCommand
     } else {
@@ -113,9 +109,7 @@ export class CommandService implements ICommandService {
     if (command) {
       this._commands = this._commands.filter((com) => com.id !== commandId)
 
-      await this._jsonCommandService.saveCommandsFile({
-        commands: this._commands
-      })
+      await this._jsonCommandService.saveCommands(this._commands)
     } else {
       throw "This command doesn't exist."
     }
