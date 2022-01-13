@@ -1,8 +1,7 @@
+import 'reflect-metadata'
 import path from 'path'
 import os from 'os'
 import { rmSync } from 'fs'
-import 'reflect-metadata'
-import { container } from 'tsyringe'
 
 import { IJSONService, JSONService } from '../../services'
 
@@ -11,7 +10,7 @@ describe('Testing JSONService class', () => {
   let filepath: string
 
   beforeAll(() => {
-    jsonService = container.resolve(JSONService)
+    jsonService = new JSONService()
     filepath = path.join(__dirname, '../dummy_data/test.json')
   })
 

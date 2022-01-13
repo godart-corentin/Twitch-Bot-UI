@@ -1,5 +1,4 @@
 import 'reflect-metadata'
-import { container } from 'tsyringe'
 import path from 'path'
 import os from 'os'
 
@@ -13,7 +12,7 @@ describe('Testing JSONCommandService class', () => {
   let notAllowedCommandsFilepath: string
 
   beforeAll(() => {
-    jsonCommandService = container.resolve(JSONCommandService)
+    jsonCommandService = new JSONCommandService()
     commandsFilepath = path.join(__dirname, '../dummy_data/commands.json')
   })
 
