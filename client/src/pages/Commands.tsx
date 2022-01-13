@@ -1,6 +1,7 @@
 import { Heading, HStack, SlideFade, Td, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { DataTable, Panel, PrefixEditing } from "../components";
 import useWindowDimensions from "../hooks/window";
@@ -92,7 +93,13 @@ export const Commands = () => {
                     )}
                   </HStack>
                 </Td>
-                <Td>Actions</Td>
+                <Td>
+                  <HStack>
+                    <Link to={`/dashboard/commands/update/${command.id}`}>
+                      <FontAwesomeIcon icon="edit" />
+                    </Link>
+                  </HStack>
+                </Td>
               </>
             )}
           />

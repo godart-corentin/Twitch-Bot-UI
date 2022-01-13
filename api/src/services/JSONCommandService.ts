@@ -18,7 +18,7 @@ export class JSONCommandService extends JSONService {
 
   constructor() {
     super()
-    this.commandsFilepath = path.join(__dirname, '../commands.json')
+    this.commandsFilepath = path.join(__dirname, '../../commands.json')
   }
 
   setCommandsFilepath(path: string) {

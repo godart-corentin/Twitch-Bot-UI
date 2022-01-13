@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { Panel } from "../components";
-import { AddCommandData } from "../lib/types";
+import { AddOrUpdateCommandData } from "../lib/types";
 import { createCommand } from "../services/CommandService";
 
 export const CreateCommand = () => {
@@ -32,7 +32,7 @@ export const CreateCommand = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = async (data: AddCommandData) => {
+  const onSubmit = async (data: AddOrUpdateCommandData) => {
     setIsSubmitting(true);
 
     const dataToSubmit = {

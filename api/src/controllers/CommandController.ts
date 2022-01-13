@@ -5,7 +5,8 @@ import { Controller, Get, Post, Put, Delete } from '../lib/decorators'
 import {
   CreateCommandRequest,
   DeleteCommandRequest,
-  GetOneCommandRequest,
+  GetCommandByIdRequest,
+  GetCommandByNameRequest,
   UpdateCommandRequest
 } from '../lib/types'
 import { CommandService, ICommandService } from '../services'
@@ -29,11 +30,24 @@ export class CommandController {
     }
   }
 
-  @Get('/:name')
-  async getOne(req: GetOneCommandRequest, reply: FastifyReply) {
+  @Get('/byName/:name')
+  async getByName(req: GetCommandByNameRequest, reply: FastifyReply) {
     try {
       const command = await this._commandService.getCommand({
         name: req.params.name
+      })
+
+      return reply.code(200).send({ command })
+    } catch (error) {
+      return reply.code(500).send({ error })
+    }
+  }
+
+  @Get('/byId/:id')
+  async getById(req: GetCommandByIdRequest, reply: FastifyReply) {
+    try {
+      const command = await this._commandService.getCommand({
+        id: req.params.id
       })
 
       return reply.code(200).send({ command })

@@ -10,6 +10,7 @@ import {
   faChevronRight,
   faCircleNotch,
   faCrown,
+  faEdit,
   faMoon,
   faPlusCircle,
   faShieldAlt,
@@ -44,7 +45,8 @@ library.add(
   faSun,
   faMoon,
   faPlusCircle,
-  faCheckCircle
+  faCheckCircle,
+  faEdit
 );
 
 ReactDOM.render(

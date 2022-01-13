@@ -7,6 +7,7 @@ import {
   Auth,
   Commands,
   CreateCommand,
+  EditCommand,
   Dashboard,
   Disconnect,
   Events,
@@ -25,6 +26,10 @@ export const App = () => (
           <Route
             path="/dashboard/commands/create"
             element={<CreateCommand />}
+          />
+          <Route
+            path="/dashboard/commands/update/:id"
+            element={<EditCommand />}
           />
           <Route path="/dashboard/schedulers" element={<Schedulers />} />
           <Route path="/dashboard/events" element={<Events />} />

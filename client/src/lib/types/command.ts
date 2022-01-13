@@ -12,7 +12,7 @@ export type Command = {
   policies: CommandPolicies;
 };
 
-export type AddCommandData = {
+export type AddOrUpdateCommandData = {
   name: string;
   command: string;
   message: string;

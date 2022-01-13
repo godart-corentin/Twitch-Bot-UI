@@ -54,7 +54,6 @@ export class TwitchUserService implements ITwitchUserService {
 
       return allowed
     } catch (e) {
-      console.log(e)
       return false
     }
   }

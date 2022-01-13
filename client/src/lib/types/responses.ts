@@ -39,3 +39,13 @@ export type GetPrefix = {
   prefix: string | null;
   error: string | null;
 };
+
+/** Get Command By Id */
+export type GetCommandByIdAPIResponse = {
+  command: Command;
+};
+
+export type GetCommandById = {
+  command: Command | null;
+  error: string | null;
+};

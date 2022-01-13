@@ -5,9 +5,15 @@ export type VerifyCodeRequest = FastifyRequest<{
   Querystring: { code: string }
 }>
 
-export type GetOneCommandRequest = FastifyRequest<{
+export type GetCommandByNameRequest = FastifyRequest<{
   Params: {
     name: string
+  }
+}>
+
+export type GetCommandByIdRequest = FastifyRequest<{
+  Params: {
+    id: string
   }
 }>
 
