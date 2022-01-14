@@ -42,7 +42,15 @@ export const CreateCommand = () => {
 
     const { success, error } = await createCommand(dataToSubmit);
     if (success) {
-      navigate("/dashboard/commands");
+      navigate("/dashboard/commands", {
+        state: {
+          toast: {
+            title: "Command creation success",
+            message: "The creation of the command was successful.",
+            status: "success",
+          },
+        },
+      });
     } else {
       setFormError(error);
     }

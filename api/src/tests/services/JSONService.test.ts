@@ -32,12 +32,8 @@ describe('Testing JSONService class', () => {
     }
 
     it('Should be successful', async () => {
-      try {
-        await jsonService.saveFile(filepath, JSON.stringify(test))
-        expect(true).toBeTruthy()
-      } catch (error) {
-        console.log(error)
-      }
+      await jsonService.saveFile(filepath, JSON.stringify(test))
+      expect(true).toBeTruthy()
     })
   })
 

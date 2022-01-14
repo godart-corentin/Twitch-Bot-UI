@@ -68,12 +68,8 @@ describe('Testing JSONCommandService class', () => {
     ]
 
     it('Should be successful', async () => {
-      try {
-        await jsonCommandService.saveCommands(commands)
-        expect(true).toBeTruthy()
-      } catch (error) {
-        console.log(error)
-      }
+      await jsonCommandService.saveCommands(commands)
+      expect(true).toBeTruthy()
     })
   })
 
@@ -107,12 +103,8 @@ describe('Testing JSONCommandService class', () => {
     const prefix = '/'
 
     it('Should be successful', async () => {
-      try {
         await jsonCommandService.savePrefix(prefix)
         expect(true).toBeTruthy()
-      } catch (error) {
-        console.log(error)
-      }
     })
   })
 

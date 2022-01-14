@@ -17,11 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Loader, Panel } from "../components";
 import { AddOrUpdateCommandData, Command } from "../lib/types";
-import {
-  createCommand,
-  getCommandById,
-  updateCommand,
-} from "../services/CommandService";
+import { getCommandById, updateCommand } from "../services/CommandService";
 
 export const EditCommand = () => {
   const [command, setCommand] = useState<Command | null>(null);
@@ -69,7 +65,15 @@ export const EditCommand = () => {
 
     const { success, error } = await updateCommand(dataToSubmit);
     if (success) {
-      navigate("/dashboard/commands");
+      navigate("/dashboard/commands", {
+        state: {
+          toast: {
+            title: "Command update success",
+            message: "The update of the command was successful.",
+            status: "success",
+          },
+        },
+      });
     } else {
       setFormError(error);
     }

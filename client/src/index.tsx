@@ -18,6 +18,7 @@ import {
   faSun,
   faTachometerAlt,
   faTerminal,
+  faTrashAlt,
   faUser,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -46,7 +47,8 @@ library.add(
   faMoon,
   faPlusCircle,
   faCheckCircle,
-  faEdit
+  faEdit,
+  faTrashAlt
 );
 
 ReactDOM.render(

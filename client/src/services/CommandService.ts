@@ -105,3 +105,26 @@ export const updateCommand = async (
     };
   }
 };
+
+export const deleteCommand = async (id: string) => {
+  try {
+    await axiosClient.delete(`/commands/${id}`);
+
+    return {
+      success: true,
+      error: null,
+    };
+  } catch (err) {
+    let error: string;
+    const responseError = err as AxiosError;
+    if (responseError.response?.data.status === 401) {
+      error = responseError.response.data.message;
+    } else {
+      error = "Error while creating the command.";
+    }
+    return {
+      success: false,
+      error,
+    };
+  }
+};

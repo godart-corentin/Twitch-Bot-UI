@@ -1,12 +1,29 @@
-import { Heading, HStack, SlideFade, Td, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  SlideFade,
+  Td,
+  Text,
+  useColorModeValue,
+  useToast,
+} from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { DataTable, Panel, PrefixEditing } from "../components";
 import useWindowDimensions from "../hooks/window";
-import { Command } from "../lib/types";
-import { getCommands } from "../services/CommandService";
+import { Command, LocationToastState } from "../lib/types";
+import { deleteCommand, getCommands } from "../services/CommandService";
 
 export const Commands = () => {
   const tableColumns = ["Name", "Command", "Message", "Policies", "Actions"];
@@ -15,9 +32,16 @@ export const Commands = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [commands, setCommands] = useState<Array<Command>>([]);
   const [error, setError] = useState<string | null>(null);
+
   const [shouldMinifyMessage, setShouldMinifyMessage] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCommandId, setSelectedCommandId] = useState<string | null>(
+    null
+  );
 
   const { width } = useWindowDimensions();
+  const location = useLocation();
+  const toast = useToast();
 
   useEffect(() => {
     let mounted = true;
@@ -44,6 +68,54 @@ export const Commands = () => {
       setShouldMinifyMessage(false);
     }
   }, [width]);
+
+  useEffect(() => {
+    const locationState = location.state as LocationToastState;
+    if (locationState && locationState.toast) {
+      toast({
+        ...locationState.toast,
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [location.state, toast]);
+
+  const selectCommandForDelete = (id: string) => {
+    setSelectedCommandId(id);
+    setIsModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedCommandId(null);
+  };
+
+  const onDeleteCommand = async () => {
+    if (selectedCommandId) {
+      const { error } = await deleteCommand(selectedCommandId);
+      if (error) {
+        toast({
+          title: "Command deletion failed",
+          status: "error",
+          description: error,
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Command deletion success",
+          status: "success",
+          description: "The deletion of the command was successful.",
+          duration: 3000,
+          isClosable: true,
+        });
+        const newCommands = commands.filter((c) => c.id !== selectedCommandId);
+        setCommands(newCommands);
+      }
+      setIsModalOpen(false);
+      setSelectedCommandId(null);
+    }
+  };
 
   return (
     <>
@@ -95,9 +167,24 @@ export const Commands = () => {
                 </Td>
                 <Td>
                   <HStack>
-                    <Link to={`/dashboard/commands/update/${command.id}`}>
-                      <FontAwesomeIcon icon="edit" />
-                    </Link>
+                    <Box
+                      transition="color 0.3s ease-out"
+                      _hover={{ color: "orange.300" }}
+                    >
+                      <Link to={`/dashboard/commands/update/${command.id}`}>
+                        <FontAwesomeIcon icon="edit" />
+                      </Link>
+                    </Box>
+                    <Box
+                      transition="color 0.3s ease-out"
+                      _hover={{ color: "orange.300" }}
+                      cursor="pointer"
+                      onClick={() =>
+                        selectCommandForDelete(command.id as string)
+                      }
+                    >
+                      <FontAwesomeIcon icon="trash-alt" />
+                    </Box>
                   </HStack>
                 </Td>
               </>
@@ -110,6 +197,31 @@ export const Commands = () => {
           )}
         </Panel>
       </SlideFade>
+      <Modal isOpen={isModalOpen} onClose={onCloseModal} isCentered>
+        <ModalOverlay />
+
+        <ModalContent bg={useColorModeValue("white", "dark.700")}>
+          <ModalHeader>Delete confirmation</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <p>Are you sure you wan't to delete this command ?</p>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="gray"
+              variant="solid"
+              mr={3}
+              onClick={onCloseModal}
+            >
+              Cancel
+            </Button>
+            <Button colorScheme="red" variant="solid" onClick={onDeleteCommand}>
+              Delete
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
