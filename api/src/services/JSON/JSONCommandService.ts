@@ -1,7 +1,7 @@
 import path from 'path'
 import { singleton } from 'tsyringe'
 
-import { Command, CommandFile } from '../lib/types'
+import { Command, CommandFile } from '../../lib/types'
 import { JSONService } from './JSONService'
 
 export interface IJSONCommandService {
@@ -18,7 +18,7 @@ export class JSONCommandService extends JSONService {
 
   constructor() {
     super()
-    this.commandsFilepath = path.join(__dirname, '../../commands.json')
+    this.commandsFilepath = path.join(__dirname, '../../../commands.json')
   }
 
   setCommandsFilepath(path: string) {

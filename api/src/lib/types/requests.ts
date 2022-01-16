@@ -1,9 +1,11 @@
 import { FastifyRequest } from 'fastify'
-import { Command } from '.'
+import { Command, Scheduler } from '.'
 
 export type VerifyCodeRequest = FastifyRequest<{
   Querystring: { code: string }
 }>
+
+/** Command Requests */
 
 export type GetCommandByNameRequest = FastifyRequest<{
   Params: {
@@ -34,8 +36,34 @@ export type DeleteCommandRequest = FastifyRequest<{
   }
 }>
 
+/** Prefix Requests */
+
 export type UpdatePrefixRequest = FastifyRequest<{
   Body: {
     prefix: string
+  }
+}>
+
+/** Schedulers Requests */
+export type GetSchedulerRequest = FastifyRequest<{
+  Params: {
+    id: string
+  }
+}>
+
+export type CreateSchedulerRequest = FastifyRequest<{
+  Body: Scheduler
+}>
+
+export type UpdateSchedulerRequest = FastifyRequest<{
+  Body: Scheduler
+  Params: {
+    id: string
+  }
+}>
+
+export type DeleteSchedulerRequest = FastifyRequest<{
+  Params: {
+    id: string
   }
 }>

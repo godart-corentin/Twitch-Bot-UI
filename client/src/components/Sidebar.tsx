@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Avatar,
-  Fade,
-  Flex,
-  Heading,
-  Text,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
+import { Avatar, Fade, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { menu } from "../lib/menu";
@@ -24,7 +16,7 @@ export const Sidebar = ({ routePath, user }: SidebarProps) => {
   const [isOpened, setIsOpened] = useState(true);
   const [animationDone, setAnimationDone] = useState(false);
 
-  const bgUser = useColorModeValue("gray.100", "dark.800");
+  const bgUser = "dark.800";
 
   const { width } = useWindowDimensions();
 
@@ -79,7 +71,7 @@ export const Sidebar = ({ routePath, user }: SidebarProps) => {
       h="100%"
       w={isOpened ? "250px" : "100px"}
       p="3em 1em"
-      bg={useColorModeValue("white", "dark.700")}
+      bg={"dark.700"}
       flexDirection="column"
       justifyContent="space-between"
       position="relative"
@@ -145,7 +137,7 @@ export const Sidebar = ({ routePath, user }: SidebarProps) => {
         w="30px"
         h="30px"
         zIndex={3}
-        bg={useColorModeValue("gray.200", "dark.900")}
+        bg={"dark.900"}
         boxShadow="sm"
         cursor="pointer"
         justifyContent="center"

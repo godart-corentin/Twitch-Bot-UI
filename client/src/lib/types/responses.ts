@@ -1,4 +1,4 @@
-import { Command, User } from ".";
+import { Command, Scheduler, User } from ".";
 
 export type Message = {
   status: number;
@@ -10,7 +10,8 @@ export type Success = {
   error: string | null;
 };
 
-/** Get User Data */
+/** User Responses */
+
 export type GetUserDataAPIResponse = {
   user: User | null;
 };
@@ -20,7 +21,8 @@ export type GetUserData = {
   error: string | null;
 };
 
-/** Get Commands */
+/** Command Responses */
+
 export type GetCommandsAPIResponse = {
   commands: Array<Command>;
 };
@@ -30,7 +32,17 @@ export type GetCommands = {
   error: string | null;
 };
 
-/** Get Prefix */
+export type GetCommandByIdAPIResponse = {
+  command: Command;
+};
+
+export type GetCommandById = {
+  command: Command | null;
+  error: string | null;
+};
+
+/** Prefix Responses */
+
 export type GetPrefixAPIResponse = {
   prefix: string;
 };
@@ -40,12 +52,22 @@ export type GetPrefix = {
   error: string | null;
 };
 
-/** Get Command By Id */
-export type GetCommandByIdAPIResponse = {
-  command: Command;
+/** Scheduler Responses */
+
+export type GetSchedulersAPIResponse = {
+  schedulers: Array<Scheduler>;
 };
 
-export type GetCommandById = {
-  command: Command | null;
+export type GetSchedulers = {
+  schedulers: Array<Scheduler>;
+  error: string | null;
+};
+
+export type GetSchedulerAPIResponse = {
+  scheduler: Scheduler;
+};
+
+export type GetScheduler = {
+  scheduler: Scheduler | null;
   error: string | null;
 };

@@ -1,8 +1,8 @@
 import { inject, singleton } from 'tsyringe'
 import axios from 'axios'
 
-import { IConfiguration } from '../Configuration'
-import { TokenResponse } from '../lib/types'
+import { IConfiguration } from '../../Configuration'
+import { TokenResponse } from '../../lib/types'
 
 export interface ITwitchTokenService {
   verifyCode(code: string): Promise<TokenResponse | null>

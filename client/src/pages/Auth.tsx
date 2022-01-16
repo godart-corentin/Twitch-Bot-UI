@@ -1,9 +1,9 @@
-import { Button, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { ColorModeSwitcher, Loader } from "../components";
+import { Loader } from "../components";
 import { UserContext } from "../context";
 import { verifyCode } from "../services/TwitchService";
 
@@ -14,8 +14,6 @@ export const Auth = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { authenticated, setAuthenticated } = useContext(UserContext);
-
-  const bg = useColorModeValue("gray.200", "dark.800");
 
   useEffect(() => {
     let mounted = true;
@@ -53,13 +51,12 @@ export const Auth = () => {
       width="100%"
       justifyContent="center"
       alignItems="center"
-      bg={bg}
+      bg={"dark.800"}
     >
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <ColorModeSwitcher position="absolute" top="1em" right="1em" />
           <Button
             leftIcon={<FontAwesomeIcon icon={["fab", "twitch"]} />}
             colorScheme={"purple"}

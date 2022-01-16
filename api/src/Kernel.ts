@@ -11,7 +11,9 @@ import {
   CommandService,
   JSONService,
   JSONCommandService,
-  PrefixService
+  PrefixService,
+  SchedulerService,
+  JSONSchedulerService
 } from './services'
 
 export class Kernel {
@@ -28,12 +30,14 @@ export class Kernel {
       .register('ITwitchTokenService', { useClass: TwitchTokenService })
       .register('ICommandService', { useClass: CommandService })
       .register('IPrefixService', { useClass: PrefixService })
+      .register('ISchedulerService', { useClass: SchedulerService })
       // Other services
       .register('ILoggerService', { useClass: LoggerService })
       .register('ITokenService', { useClass: TokenService })
       .register('IWhitelistService', { useClass: WhitelistService })
       .register('IJSONService', { useClass: JSONService })
       .register('IJSONCommandService', { useClass: JSONCommandService })
+      .register('IJSONSchedulerService', { useClass: JSONSchedulerService })
   }
 
   start() {

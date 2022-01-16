@@ -13,6 +13,7 @@ import {
   Events,
   Schedulers,
   Whitelist,
+  CreateScheduler,
 } from "./pages";
 
 export const App = () => (
@@ -32,6 +33,10 @@ export const App = () => (
             element={<EditCommand />}
           />
           <Route path="/dashboard/schedulers" element={<Schedulers />} />
+          <Route
+            path="/dashboard/schedulers/create"
+            element={<CreateScheduler />}
+          />
           <Route path="/dashboard/events" element={<Events />} />
           <Route path="/dashboard/whitelist" element={<Whitelist />} />
           <Route path="/dashboard/disconnect" element={<Disconnect />} />

@@ -1,12 +1,4 @@
-import {
-  Box,
-  BoxProps,
-  Flex,
-  Heading,
-  HStack,
-  Menu,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, BoxProps, Flex, Heading, HStack, Menu } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { PanelAction } from "../lib/types";
 
@@ -21,9 +13,9 @@ export const Panel: React.FC<PanelProps> = ({
   children,
   ...rest
 }) => {
-  const panelBg = useColorModeValue("white", "dark.700");
-  const actionBg = useColorModeValue("gray.100", "dark.800");
-  const actionBgHovered = useColorModeValue("gray.200", "dark.750");
+  const panelBg = "dark.700";
+  const actionBg = "dark.800";
+  const actionBgHovered = "dark.750";
 
   return (
     <Box

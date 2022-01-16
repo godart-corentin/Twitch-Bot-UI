@@ -1,4 +1,5 @@
 export * from './command'
+export * from './scheduler'
 
 export * from './config'
 export * from './whitelist'

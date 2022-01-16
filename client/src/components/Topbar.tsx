@@ -8,7 +8,6 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -51,7 +50,7 @@ export const Topbar = ({ routePath, user }: TopbarProps) => {
       h="100px"
       w="100%"
       p="3em 1em"
-      bg={useColorModeValue("white", "dark.700")}
+      bg={"dark.700"}
       flexDirection="row"
       justifyContent="space-between"
       alignItems="center"

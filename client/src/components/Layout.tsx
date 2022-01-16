@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
-import { ColorModeSwitcher, Loader } from ".";
+import { Loader } from ".";
 import { Topbar } from "./Topbar";
 import { Sidebar } from "./Sidebar";
 import { UserContext } from "../context";
@@ -59,12 +59,11 @@ export const Layout = () => {
         as="main"
         flex={1}
         p={["1em", "2em", "3em"]}
-        bg={useColorModeValue("gray.100", "dark.800")}
+        bg={"dark.800"}
         position="relative"
         height="100vh"
         overflowY="auto"
       >
-        <ColorModeSwitcher position="absolute" top="1em" right="1em" />
         {isLoading && <Loader />}
         <Outlet />
       </Box>

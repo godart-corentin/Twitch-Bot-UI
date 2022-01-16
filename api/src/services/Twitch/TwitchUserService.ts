@@ -1,9 +1,9 @@
 import { inject, singleton } from 'tsyringe'
 import axios from 'axios'
 
-import { IConfiguration } from '../Configuration'
-import { TwitchUserResponse } from '../lib/types'
-import { IWhitelistService } from '.'
+import { IConfiguration } from '../../Configuration'
+import { TwitchUserResponse } from '../../lib/types'
+import { IWhitelistService } from '..'
 
 export interface ITwitchUserService {
   getUserFromToken(token: string): Promise<TwitchUserResponse | null>

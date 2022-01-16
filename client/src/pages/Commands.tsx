@@ -13,7 +13,6 @@ import {
   SlideFade,
   Td,
   Text,
-  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -200,7 +199,7 @@ export const Commands = () => {
       <Modal isOpen={isModalOpen} onClose={onCloseModal} isCentered>
         <ModalOverlay />
 
-        <ModalContent bg={useColorModeValue("white", "dark.700")}>
+        <ModalContent bg="dark.700">
           <ModalHeader>Delete confirmation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
